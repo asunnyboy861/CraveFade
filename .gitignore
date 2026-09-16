@@ -1,0 +1,11 @@
+.env
+keytext*.md
+COMPETITOR_REPORT.md
+GLMSecret.txt
+Secrets.plist
+TR-*.MD
+.DS_Store
+xcuserdata/
+DerivedData/
+build/
+icon_1024.png
