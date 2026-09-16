@@ -9,16 +9,16 @@
 | **Repo URL** | https://github.com/asunnyboy861/CraveFade |
 | **Visibility** | Public |
 | **Primary Language** | Swift |
-| **GitHub Pages** | ⏳ Pending (enabled in PHASE 7 from `/docs` folder) |
+| **GitHub Pages** | ✅ **ENABLED** (from `/docs` folder) |
 
 ## Policy Pages (Deployed from Main Repository /docs)
 
 | Page | URL | Status |
 |------|-----|--------|
-| Landing Page | https://asunnyboy861.github.io/CraveFade/ | ⏳ Pending |
-| Support | https://asunnyboy861.github.io/CraveFade/support.html | ⏳ Pending |
-| Privacy Policy | https://asunnyboy861.github.io/CraveFade/privacy.html | ⏳ Pending |
-| Terms of Use | https://asunnyboy861.github.io/CraveFade/terms.html | ⏳ Pending (subscription app) |
+| Landing Page | https://asunnyboy861.github.io/CraveFade/ | ✅ Active |
+| Support | https://asunnyboy861.github.io/CraveFade/support.html | ✅ Active |
+| Privacy Policy | https://asunnyboy861.github.io/CraveFade/privacy.html | ✅ Active |
+| Terms of Use | https://asunnyboy861.github.io/CraveFade/terms.html | ✅ Active |
 
 ## Repository Structure
 
