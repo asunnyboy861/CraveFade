@@ -38,29 +38,23 @@
 
 ---
 
-### 🔵 IAP StoreKit 配置（订阅上线必需）
+### 🔵 IAP StoreKit 配置（2026-09-17 已通过 App Store Connect API 大部分代填）
 
-**影响功能**：不在 App Store Connect 创建产品，付费墙将显示"Unable to load purchase options"，用户无法完成购买（免费功能不受影响）
+**已通过 API 完成**：
+- ✅ 订阅组 `CraveFade Pro`（含 Monthly + Annual 两个订阅，已定价、已建 en-US 本地化、全球可用）
+  - Monthly：$4.99/月（product id `com.zzoutuo.CraveFade.pro.monthly`）
+  - Annual：$29.99/年（product id `com.zzoutuo.CraveFade.pro.yearly`）
+- ✅ 商店元数据：名称 `CraveFade: Quit Vaping`、副标题、描述（3990字）、关键词（93字）、推广文本、隐私政策/支持/营销链接、主类目 Health & Fitness、年龄分级 17+
 
-**已自动配置部分**：
+**仍需在 App Store Connect 网页手动完成（API 权限/端点限制）**：
+1. 年付订阅的 **Introductory Offer → Free Trial 7 days**：ASC → App → 订阅 → CraveFade Pro Annual → Subscription Pricing → Offer Type 选 Free Trial → 7 天（约30秒）
+2. 终身买断产品：ASC → App → In-App Purchases → Create → Type 选 **Non-Consumable** → Reference Name `CraveFade Pro Lifetime` → Product ID `com.zzoutuo.CraveFade.pro.lifetime` → 价格 $59.99（约1分钟）
+3. 上传构建后填写 What's New（内容已在 keytext.md 备好）
+
+**已自动配置部分（代码侧）**：
 - ✅ `PurchaseManager.swift`（StoreKit 2，`Transaction.currentEntitlement(for:)`，3 个产品 ID 与 price.md 一致）
 - ✅ Paywall 含隐私政策/Terms 链接 + 自动续订披露；Settings 顶部"Manage subscription"直通入口
-
-**配置步骤**：
-1. App Store Connect → 你的 App → **Features** → **In-App Purchases**（订阅需先创建订阅组 `CraveFade Pro`）
-2. 按下表创建产品：
-
-| 产品 | Reference Name | Product ID | 价格 |
-|------|---------------|-----------|------|
-| 月付 | CraveFade Pro Monthly | `com.zzoutuo.CraveFade.pro.monthly` | $4.99/月 |
-| 年付 | CraveFade Pro Annual | `com.zzoutuo.CraveFade.pro.yearly` | $29.99/年（7天免费试用） |
-| 终身 | CraveFade Pro Lifetime | `com.zzoutuo.CraveFade.pro.lifetime` | $59.99 一次性（Non-Consumable） |
-
-3. Display Name / Description 从 `price.md` 复制（已验证字符限制 ≤35/≤55）
-4. 年付产品在订阅属性中配置 **7-day Free Trial**  introductory offer
-5. ⚠️ 年付与月付必须放在**同一订阅组**；终身买断类型选 **Non-Consumable**
-6. 本地测试：Xcode → File → New → File → **StoreKit Configuration File**，添加同名产品后 Edit Scheme → Run → Options 勾选该配置文件即可沙盒测试
-7. 在 App 内 Settings → **Restore Purchases** 验证恢复流程
+- ✅ 本地测试：Xcode → File → New → File → **StoreKit Configuration File**，添加同名产品后 Edit Scheme → Run → Options 勾选即可沙盒测试
 
 ---
 
