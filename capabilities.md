@@ -17,8 +17,8 @@
 **当前状态**：App 使用本地 SwiftData 存储，无需配置即可正常使用
 
 **已自动配置部分**：
-- ✅ `CraveFade.entitlements` 已声明 CloudKit + 容器 `iCloud.com.zzoutuo.CraveFade`
 - ✅ App Groups `group.com.zzoutuo.CraveFade.shared` 已配置
+- ⚠️ iCloud entitlements **已从项目中移除**（2026-09-17）：未注册的 CloudKit 容器声明会阻断分发签名（IDEDistribution error 0），代码本就使用本地存储。启用同步前请先完成下方第 1-4 步注册容器，再在 Xcode → Signing & Capabilities 重新添加 iCloud 能力。
 
 **如需启用同步，请手动配置**：
 1. 打开 [Apple Developer](https://developer.apple.com) → **Certificates, Identifiers & Profiles** → **Identifiers**
