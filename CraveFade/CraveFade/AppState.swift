@@ -138,13 +138,11 @@ final class AppState: ObservableObject {
         try? context.save()
         stats.refresh()
         let limit = TaperPlanEngine.dailyLimit(profile: profile, on: date)
-        if stats.netPuffsToday > limit {
-            NotificationScheduler.shared.scheduleDailySummary(
-                hour: 21, puffs: stats.netPuffsToday,
-                money: stats.moneySavedText,
-                toGo: max(0, limit - stats.netPuffsToday)
-            )
-        }
+        NotificationScheduler.shared.scheduleDailySummary(
+            hour: 21, puffs: stats.netPuffsToday,
+            money: stats.moneySavedText,
+            toGo: max(0, limit - stats.netPuffsToday)
+        )
         return (stats.netPuffsToday, limit)
     }
 

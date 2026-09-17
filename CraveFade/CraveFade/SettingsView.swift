@@ -116,7 +116,10 @@ struct SettingsView: View {
                 }
                 TextField("Wish list goal (e.g. PS5)", text: Binding(
                     get: { profile.wishName },
-                    set: { profile.wishName = $0 }
+                    set: {
+                        profile.wishName = $0
+                        appState.saveProfile()
+                    }
                 ))
                 HStack {
                     Text("Goal price")

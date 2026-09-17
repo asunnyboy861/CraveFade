@@ -174,24 +174,22 @@ final class HealthKitService: ObservableObject {
         let end = Date.now
         guard let recentStart = cal.date(byAdding: .day, value: -7, to: end),
               let baselineStart = cal.date(byAdding: .day, value: -30, to: end) else { return }
-        let recent = fetchAverage(type: type, start: recentStart, end: end)
-        let baseline = fetchAverage(type: type, start: baselineStart, end: recentStart)
-        if let recent, let baseline {
-            restingHRDelta = baseline - recent
+        Task { @MainActor in
+            let recent = await fetchAverage(type: type, start: recentStart, end: end)
+            let baseline = await fetchAverage(type: type, start: baselineStart, end: recentStart)
+            if let recent, let baseline, baseline > recent {
+                restingHRDelta = baseline - recent
+            }
         }
     }
 
-    private func fetchAverage(type: HKQuantityType, start: Date, end: Date) -> Double? {
+    private func fetchAverage(type: HKQuantityType, start: Date, end: Date) async -> Double? {
         let predicate = HKQuery.predicateForSamples(withStart: start, end: end)
-        var result: Double?
-        let semaphore = DispatchSemaphore(value: 0)
-        store.execute(HKStatisticsQuery(quantityType: type, quantitySamplePredicate: predicate, options: .discreteAverage) { _, statistics, _ in
-            if let stats = statistics, let avg = stats.averageQuantity() {
-                result = avg.doubleValue(for: HKUnit.count().unitDivided(by: .minute()))
-            }
-            semaphore.signal()
-        })
-        semaphore.wait()
-        return result
+        return await withCheckedContinuation { continuation in
+            store.execute(HKStatisticsQuery(quantityType: type, quantitySamplePredicate: predicate, options: .discreteAverage) { _, statistics, _ in
+                let value = statistics?.averageQuantity().map { $0.doubleValue(for: HKUnit.count().unitDivided(by: .minute())) }
+                continuation.resume(returning: value)
+            })
+        }
     }
 }

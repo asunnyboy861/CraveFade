@@ -28,13 +28,7 @@ struct SOSView: View {
                 victoryView
             } else if stillWant {
                 CoachEmbedView(onDone: { outcome in
-                    if outcome == "slipped" {
-                        slipped = true
-                        appState.recordCraving(outcome: .slipped, trigger: triggerTag(), aiUsed: true)
-                    } else {
-                        finishWon(aiUsed: true)
-                    }
-                    dismiss()
+                    handleCoachOutcome(outcome)
                 })
             } else {
                 breathingView
@@ -102,7 +96,10 @@ struct SOSView: View {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
             }
 
-            Button("I still want to vape") { stillWant = true }
+            Button("I still want to vape") {
+                timer?.invalidate()
+                stillWant = true
+            }
                 .font(.subheadline)
                 .foregroundStyle(.white.opacity(0.85))
                 .buttonStyle(.bordered)
@@ -164,6 +161,21 @@ struct SOSView: View {
         let cycle = phases.map(\.seconds).reduce(0, +)
         let inCycle = elapsed % cycle
         return inCycle == 0
+    }
+
+    private func handleCoachOutcome(_ outcome: String) {
+        switch outcome {
+        case "slipped":
+            timer?.invalidate()
+            appState.recordCraving(outcome: .slipped, trigger: triggerTag(), aiUsed: true)
+            dismiss()
+        case "ai_helped":
+            timer?.invalidate()
+            dismiss()
+        default:
+            stillWant = false
+            startTimer()
+        }
     }
 
     private func finishWon(aiUsed: Bool) {

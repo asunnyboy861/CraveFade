@@ -120,8 +120,8 @@ struct CoachView: View {
         let summary = appState.weekSummary()
         Task {
             do {
-                appState.consumeCoachSession()
                 let advice = try await CoachEngine.shared.advise(summary: summary, mood: mood)
+                appState.consumeCoachSession()
                 messages.append(CoachMessage(text: "\(advice.empathy) → \(advice.microAction)", isUser: false))
                 appState.recordCraving(outcome: .aiHelped, aiUsed: true)
             } catch AIServiceError.crisis {
