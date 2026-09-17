@@ -15,7 +15,7 @@
 
 | Page | URL | Status |
 |------|-----|--------|
-| Landing Page | https://asunnyboy861.github.io/CraveFade/ | ✅ Active |
+| Landing Page | https://asunnyboy861.github.io/CraveFade/ | ✅ Active (App Store ID 6812937137 linked) |
 | Support | https://asunnyboy861.github.io/CraveFade/support.html | ✅ Active |
 | Privacy Policy | https://asunnyboy861.github.io/CraveFade/privacy.html | ✅ Active |
 | Terms of Use | https://asunnyboy861.github.io/CraveFade/terms.html | ✅ Active |
